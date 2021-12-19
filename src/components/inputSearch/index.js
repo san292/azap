@@ -3,14 +3,13 @@
 import React from "react";
 // == Import library @material-ui
 import { makeStyles } from "@material-ui/core/styles";
-/**fonction qui permet à l'utilisateur de faire une recherche par titre
- */
+// == Css styles
 const useStyles = makeStyles(() => ({
   searchBar: {
     padding: 10,
     display: "flex",
     justifyContent: "center",
-    backgroundColor: "#F3F4ED",
+    backgroundColor: "#808080",
   },
   searchInput: {
     border: 30,
@@ -33,6 +32,7 @@ const useStyles = makeStyles(() => ({
  * @param {string} searchText - le film à chercher 
  * @param {string} onSearchChange - l'action des que le texte change 
  * @param {string} onSearchSubmit - soumettre le formulaire 
+
 */
 const InputSearch = ({ searchText, onSearchChange, onSearchSubmit }) => {
   const classes = useStyles();
@@ -43,7 +43,6 @@ const InputSearch = ({ searchText, onSearchChange, onSearchSubmit }) => {
         onSubmit={(evt) => {
           evt.preventDefault();
           onSearchSubmit();
-          console.log("event from inputSearch => onSubmitSubmit : ", evt);
         }}
       >
         <input
@@ -54,10 +53,6 @@ const InputSearch = ({ searchText, onSearchChange, onSearchSubmit }) => {
           onChange={(evt) => {
             const textSaisi = evt.target.value;
             onSearchChange(textSaisi);
-            console.log(
-              "data from inputSearch component => onChange(value) : ",
-              textSaisi
-            );
           }}
         />
       </form>

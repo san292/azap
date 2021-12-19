@@ -2,36 +2,36 @@
 import React from "react";
 // == Import library @material-ui
 import {
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Collapse,
-  Avatar,
-  IconButton,
-  Typography,
+  Tabs,
+  Tab,
 } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
-import Favorite from "@material-ui/icons/Favorite";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-/**useStyles is a function where you can modified css */
+// -- Import components
+import CardFilm from "../CardFilm/CardFilm";
+// == Css styles
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: "#808080",
     display: "flex",
     flexDirection: "column",
-    maxWidth: 900,
+    maxWidth: 400,
     margin: "auto",
-  },
-  typography: {
-    color: "#F8D800",
-    backgroundColor: "#424642",
+    "&:hover": {
+      transform: "scale3d(1.05, 1.05, 6)",
+      backgroundColor: "#808080",
+      borderRadius: 10,
+    },
   },
   media: {
-    paddingTop: "80.25%", // 16:9
+    width: 300,
+    height: 400,
+    margin: "auto",
   },
+  title: {
+    color: "#424642",
+    margin: 10,
+  },
+
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -47,69 +47,51 @@ const useStyles = makeStyles((theme) => ({
     color: "#F3F4ED",
   },
   iconButton: {
-    color: '#F8D800',
-
+    color: "red",
   },
 }));
 /**resultat is a function for result of search
  * @param {string} films - The props of the search.
  */
 const Resultat = ({ films }) => {
-  //console.log("filmssssssssssssssssssssssssss", films);
+  // console.log("verif props 'films'in DisplaySearch component : ", films);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  /**handleExpandClick is a function for expandClick */
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
+
+  // Display de l'ancienne recherche si toujours en mémoire
+  const lastSearch = JSON.parse(localStorage.getItem("lastSearchedMovies"));
+  //console.log("🚀 ~ lastSearch", lastSearch)
+  // test si ancienne recherche toujours active
+  if (lastSearch) films = lastSearch;
+
   /** map is a function for map of the result of search  */
-  return films.map((film) => (
-    <Card className={classes.root} key={film.id} id={film.id}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {film.vote_count}
-          </Avatar>
-        }
-      />
-      <CardMedia
-        component="img"
-        image={`https://image.tmdb.org/t/p/w500/${film.poster_path}`}
-        alt={film.title}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites"className={classes.iconButton}>
-          <Favorite />
-        </IconButton>
-        <IconButton aria-label="LibraryBook" className={classes.iconButton}>
-          <LibraryBooksIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="50" unmountOnExit>
-        <CardContent>
-          <Typography paragraph className={classes.typography}>
-            Resumé du film
-          </Typography>
-          <Typography paragraph>{film.title}</Typography>
-          <Typography paragraph>Date de sortie: {film.release_date}</Typography>
-          <Typography paragraph>{film.overview}</Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
-  ));
+  return (
+    <div className={classes.cards}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons="on"
+        textColor={"primary"}
+          TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+        }}
+        aria-label="scrollable force tabs example"
+      >
+        {films.map((film) => (
+         // <Tab icon={<CardFilm key={film.id} {...film} />} />
+          <Tab key={film.id} icon={<CardFilm {...film} />} />
+        ))}
+      </Tabs>
+    </div>
+  );
 };
+
 export default Resultat;

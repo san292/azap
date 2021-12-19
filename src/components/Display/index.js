@@ -1,140 +1,229 @@
+// == Import NPM
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 // == Import library @material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Tabs, Tab, Typography, Box } from "@material-ui/core";
-// == Import library component CardFilm
+import { Tabs, Tab, Typography, Button, Container } from "@material-ui/core";
+// == Import components
 import CardFilm from "../CardFilm/CardFilm";
 
-const TabPanel = (props) => {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-force-tabpanel-${index}`}
-            aria-labelledby={`scrollable-force-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-};
-
 const a11yProps = (index) => {
-    return {
-        id: `scrollable-force-tab-${index}`,
-        "aria-controls": `scrollable-force-tabpanel-${index}`,
-    };
+  return {
+    id: `scrollable-force-tab-${index}`,
+    "aria-controls": `scrollable-force-tabpanel-${index}`,
+  };
 };
+// == Css styles
+const useStyles = makeStyles((theme) => ({
+  root: {
+  },
+  title: {
+    display: "flex",
+    justifyContent: "flex-start",
+    fontSize: 30,
+    [theme.breakpoints.down('lg')]: {
+      fontSize:24,
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 20,
+    },
 
-const useStyles = makeStyles(() => ({
-    title: {
-        display: "flex",
-        justifyContent: "flex-start",
-        backgroundColor: "#F3F4ED ",
-        color: "#424642",
-        fontSize: 22,
-        padding: 20,
+    padding: 20,
+    color: "#F3F4ED"  
+  },
+  texte: {
+    width:"80%",
+    display: "flex",
+    margin: 'auto',
+    fontSize: 16,
+    padding: 20,
+    textAlign: "justify",
+   
+  },
+  username: {
+    textAlign: "center",
+    margin: theme.spacing(3, 1),
+    fontWeight: 600,
+    color: "#F3F4ED",
+    fontSize: 30,
+    [theme.breakpoints.down('lg')]: {
+      fontSize: 28,
     },
-    cards: {
-        width: "100%",
-        display: "flex",
-        backgroundColor: "#F3F4ED ",
+    [theme.breakpoints.down('md')]: {
+      fontSize: 19,
     },
+
+  },
+  cards: {
+    width: "100%",
+    display: "flex",
+    flexGrow: 1,
+    backgroundImage: '#F3F4ED ',
+    // [theme.breakpoints.down('md')]: {
+    //   width: "92%",
+    // },
+    // [theme.breakpoints.down('lg')]: {
+    //   width: "80",
+    // },  
+  },
+  button: {
+    backgroundColor: "#F8D800",
+    padding: theme.spacing(1, 2),
+    fontWeight: 600,
+    fontSize: 15,
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+  },
 }));
 
+/**
+ * Component for displays CardFilm.
+ *
+ * @component
+ * @example
+ * const Trending =  await axios.get("https://projet-azap-heroku.herokuapp.com/v1/topmovies");
+                      setTrending(data.data);
+ * get films trending
+
+ * return (
+*      {trending.map((film) => (
+        <Tab
+          key={film.id}
+          icon={<CardFilm {...film} /> }
+          {...a11yProps(0)}
+        />
+        ))}
+ * )
+    
+  const userName = if (localStorage.getItem("user")) {let { username } = JSON.parse(localStorage.getItem("user"));
+    setUsername(username);}
+  test if user is connected :condionnal display on button to signIn component
+
+  return (
+    {username ? (
+      <Typography
+      component="h1"
+      variant="h5"
+      className={classes.username}
+  >
+      Hello {username}
+  </Typography>
+    ) : (
+      <div className={classes.root}>
+        <Button
+          variant="contained"
+          href="/sign-up"
+          className={classes.button}>
+          ACTION !
+        </Button>
+      </div>
+    )}
+  )
+
+ */
+
 const Display = () => {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-    const [trending, setTrending] = useState([]);
-    const [upcoming, setUpcoming] = useState([]);
+  const classes = useStyles();
 
-    const getTrending = async () => {
-        try {
-            // code fait par le Front
-            //const data = await axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=455dc6a8d89a57de7742f24ebbf4b441")
-            // console.log(data.data.results)
-            // setTrending(data.data.results);
+  const [trending, setTrending] = useState([]);
+  /*   const [upcoming, setUpcoming] = useState([]) */
 
-            // code ajouté par Back
-            const response = await fetch("http://localhost:3050/v1/topmovies");
-            const data = await response.json();
-            setTrending(data);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-    useEffect(() => {
-        getTrending();
-    }, []);
+  const [username, setUsername] = useState("");
+  const [value, setValue] = React.useState(0);
 
-    const getUpcoming = async () => {
-        try {
-            const data = await axios.get(
-                "https://api.themoviedb.org/3/movie/upcoming?api_key=455dc6a8d89a57de7742f24ebbf4b441&language=en-US&page=1"
-            );
-            console.log(data.data.results);
-            setUpcoming(data.data.results);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-    useEffect(() => {
-        getUpcoming();
-    }, []);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    return (
-        <>
-            <Typography variant="h2" className={classes.title}>
-                À l'affiche en ce moment :
-            </Typography>
-            <div className={classes.cards}>
-                <Tabs
-                    value={value}
-                    // onChange={handleChange}
-                    variant="scrollable"
-                    scrollButtons="on"
-                    indicatorColor="none"
-                    textColor={"#424642"}
-                    aria-label="scrollable force tabs example"
-                >
-                    {trending.map((film) => (
-                        <Tab
-                            icon={<CardFilm key={film.id} {...film} />}
-                            {...a11yProps(0)}
-                        />
-                    ))}
-                </Tabs>
-            </div>
-            <Typography variant="h2" className={classes.title}>
-                Bientôt en salle :
-            </Typography>
-            <div className={classes.cards}>
-                <Tabs
-                    value={value}
-                    // onChange={handleChange}
-                    variant="scrollable"
-                    scrollButtons="on"
-                    indicatorColor="none"
-                    textColor={"#424642"}
-                    aria-label="scrollable force tabs example"
-                >
-                    {upcoming.map((movie) => (
-                        <Tab
-                            icon={<CardFilm key={movie.id} {...movie} />}
-                            {...a11yProps(0)}
-                        />
-                    ))}
-                </Tabs>
-            </div>
-        </>
-    );
+  const getUserName = () => {
+    // je destructure les infos de l'user du localstorage
+    if (localStorage.getItem("user")) {
+      let { username } = JSON.parse(localStorage.getItem("user"));
+      setUsername(username);
+    }
+  };
+
+  const getTrending = async () => {
+    try {
+      const data = await axios.get(
+        "https://projet-azap-heroku.herokuapp.com/v1/topmovies"
+      );
+      //console.log("verif data from component display getTrending :", data.data);
+      setTrending(data.data);
+    } catch (e) {
+      //console.log("log erreur component display on getTrending :", e);
+    }
+  };
+  
+  // TODO 04/08 ajout du cleanup
+  useEffect(() => {
+    getTrending();
+    getUserName();
+
+    return () => {
+      setUsername("");
+      setTrending([]);
+    }
+}, []);
+
+  return (
+    <>
+      {/* <Typography variant="body1" className={classes.texte}>
+        Bienvenue chez AZAP ! En créant un compte, vous pourrez ajouter des
+        listes dans votre filmothèque dans lesquelles vous pourrez y mettre des
+        films. Vous pouvez par exemple créer des films "À regarder plus tard",
+        "À acheter plus tard", "Blockbusters", "Samedi soir", ... Recherchez un
+        film et cliquez sur le petit coeur pour l'ajouter à une de vos listes.
+      </Typography> */}
+      {username ? (
+        <Typography
+        component="h1"
+        variant="h5"
+        className={classes.username}
+    >
+        Hello {username}
+    </Typography>
+      ) : (
+        <div className={classes.root}>
+          <Button
+            variant="contained"
+            component={Link} to="/sign-up"
+            className={classes.button}>
+            ACTION !
+          </Button>
+        </div>
+      )}
+      <Typography variant="h2" className={classes.title}>
+        Films les mieux notés
+      </Typography>
+      
+      <container className={classes.cards}>
+        
+        <Tabs className = "tabs"
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          textColor={"primary"}
+          TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+         }}
+         
+          aria-label="scrollable force tabs example">
+            {trending.map((film) => (
+            <Tab
+              key={film.id}
+              icon={<CardFilm {...film} /> }
+              {...a11yProps(0)}
+            />
+            ))}  
+            </Tabs>
+            
+            </container>
+    </>
+  );
 };
 
 export default Display;

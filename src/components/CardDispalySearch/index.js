@@ -11,18 +11,27 @@ import {
   CardMedia,
   Button,
   Typography,
+  Container,
 } from "@material-ui/core";
-// == Import Components
 import AddFilm from "../AddFilm";
 // == Css styles
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#F3F4ED ",
-    maxWidth: 400,
-    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+    maxWidth: 310,
     transition: "transform 0.15s ease-in-out",
     "&:hover": {
-      transform: "scale3d(1.05, 1.05, 1)",     
+      transform: "scale3d(1.05, 1.05, 1)",
+      backgroundColor: "#333",
+    },
+    paper: {
+      width: "90%",
+      height: "80%",
+      backgroundColor: "#39445a",
+      border: "1px solid #282c34",
+      borderRadius: 10,
+      color: "",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(1, 1, 3),
     },
   },
   button: {
@@ -30,20 +39,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     display: "flex",
     alignItems: "baseline",
-    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
   },
   title: {
     margin: 0,
     padding: 0,
+    "&:hover": {
+      color: "#F8D800",
+    },
   },
-  cardActions: {
-    display: "flex",
-    flexWrap: "nowrap",
-   
-  },
+  cardActions:{
+    display: 'flex',
+    flexWrap: 'wrap',
+    
+  }
 }));
 
-const CardFilm = ({
+const CardDisplaySearch = ({
   original_title: title,
   poster_path: poster,
   vote_average: vote,
@@ -52,7 +63,7 @@ const CardFilm = ({
   const classes = useStyles();
 
   // je destructure les infos de l'user du localstorage
-  let username = JSON.parse(localStorage.getItem("user"));
+  let  username  = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Card className={classes.root}>
@@ -60,7 +71,7 @@ const CardFilm = ({
         <CardMedia
           component="img"
           alt="Display films"
-          image={`https://image.tmdb.org/t/p/w300/${poster}`}
+          poster={`https://image.tmdb.org/t/p/w300/${poster}`}
           title="Display films"
         />
         <CardContent className={classes.title}>
@@ -79,10 +90,12 @@ const CardFilm = ({
           className={classes.button}>
           Plus d'infos
         </Button>
-        {username ? <AddFilm id={id} /> : null}
+        { username ? (
+          <AddFilm id={id}/>
+        ) : ( null)
+        }
       </CardActions>
     </Card>
   );
-}
-
-export default CardFilm;
+};
+export default CardDisplaySearch;

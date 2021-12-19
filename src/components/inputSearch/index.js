@@ -1,47 +1,67 @@
 /* eslint-disable no-use-before-define */
 // == Import NPM
-import React from 'react';
+import React from "react";
 // == Import library @material-ui
-import { makeStyles } from '@material-ui/core/styles';
-
+import { makeStyles } from "@material-ui/core/styles";
+/**fonction qui permet à l'utilisateur de faire une recherche par titre
+ */
 const useStyles = makeStyles(() => ({
   searchBar: {
     padding: 10,
-    display: 'flex',
-    justifyContent:'center',
-    backgroundColor: '#F3F4ED',
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#F3F4ED",
   },
-
+  searchInput: {
+    border: 30,
+    padding: 6,
+    textAlign: "left",
+    borderRadius: 6,
+    color: "grey",
+    fontSize: 14,
+    width: 200,
+    "&:hover": {
+      transform: "scale3d(1.05, 1.05, 6)",
+      width: 300,
+      borderRadius: 10,
+      color: "black",
+    },
+  },
 }));
 
 /**fonction qui permet à l'utilisateur de faire une recherche par titre
  * @param {string} searchText - le film à chercher 
  * @param {string} onSearchChange - l'action des que le texte change 
  * @param {string} onSearchSubmit - soumettre le formulaire 
-
 */
-export default function InputSearch ({ searchText, onSearchChange, onSearchSubmit }) {
+const InputSearch = ({ searchText, onSearchChange, onSearchSubmit }) => {
   const classes = useStyles();
+  
   return (
-      <div className={classes.searchBar}>
-            <form onSubmit={(evt) => {
-               evt.preventDefault()
-              onSearchSubmit();
-             console.log(evt)
-            }}>
-              <input 
-                icon='search'
-                iconPosition='left'
-                placeholder="taper votre recherche"
-                value={searchText}
-                onChange={(evt) => {
-                  const textSaisi = evt.target.value;
-                  onSearchChange(textSaisi);
-                  console.log(textSaisi)
-                }}
-              />
-            </form>
-      </div>
+    <div className={classes.searchBar}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          onSearchSubmit();
+          console.log("event from inputSearch => onSubmitSubmit : ", evt);
+        }}
+      >
+        <input
+          className={classes.searchInput}
+          icon="search"
+          placeholder="taper votre recherche"
+          value={searchText}
+          onChange={(evt) => {
+            const textSaisi = evt.target.value;
+            onSearchChange(textSaisi);
+            console.log(
+              "data from inputSearch component => onChange(value) : ",
+              textSaisi
+            );
+          }}
+        />
+      </form>
+    </div>
   );
 };
-
+export default InputSearch;

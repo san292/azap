@@ -1,20 +1,14 @@
 // == Imports NPM
-import React from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 // == Import library @material-ui
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-} 
-from '@material-ui/core';
-import FaceIcon from '@material-ui/icons/Face';
-import HomeIcon from '@material-ui/icons/Home';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from "@material-ui/core/styles";
+import { Tabs, Tab, Typography, Box } from "@material-ui/core";
+import FaceIcon from "@material-ui/icons/Face";
+import HomeIcon from "@material-ui/icons/Home";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import SearchIcon from "@material-ui/icons/Search";
 
 /**
  * @function
@@ -30,8 +24,7 @@ const TabPanel = (props) => {
       hidden={value !== index}
       id={`scrollable-force-tabpanel-${index}`}
       aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box p={3}>
           <Typography>{children}</Typography>
@@ -39,7 +32,7 @@ const TabPanel = (props) => {
       )}
     </div>
   );
-}
+};
 
 // == PropTypes of the component TabPanel
 TabPanel.propTypes = {
@@ -56,29 +49,31 @@ TabPanel.propTypes = {
 const a11yProps = (index) => {
   return {
     id: `scrollable-force-tab-${index}`,
-    'aria-controls': `scrollable-force-tabpanel-${index}`,
+    "aria-controls": `scrollable-force-tabpanel-${index}`,
   };
-}
+};
 
-/** 
+/**
  * @function
  * @param {theme} theme
  * @name makeStyles
  */
- const useStyles = makeStyles((theme) => ({
+// == Css styles
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%',
-    background: 'linear-gradient(45deg, #bdc3c7 10%, #424642 20%)',
+    width: "100%",
+    background: "linear-gradient(45deg, #bdc3c7 10%, #424642 20%)",
     // backgroundColor: "#424642",
-    display:'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     marginTop: 1,
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
   },
-  icon:{
-    color:'#F8D800',
-    
-  }
+  icon: {
+    color: "#F8D800 !important",
+    opacity: 1,
+  },
 }));
 
 /**
@@ -101,17 +96,47 @@ const NavBar = () => {
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="on"
-        indicatorColor="none"
-        textColor={"#424642"}
-        aria-label="scrollable force tabs example"
-      >
-        <Tab label="Accueil" component={Link} to="/" icon={<HomeIcon />} {...a11yProps(0)} className={classes.icon}/>
-        <Tab label="Recherche" component={Link} to="/search" icon={<SearchIcon />} {...a11yProps(1)}  className={classes.icon}/>
-        <Tab label="Filmotheque" component={Link} to="/library" icon={<LibraryBooksIcon />} {...a11yProps(2)}  className={classes.icon}/>
-        <Tab label="Utilisateur" component={Link} to="/my-profile" icon={<FaceIcon />} {...a11yProps(3)}  className={classes.icon}/>
+        TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+        }}
+        aria-label="scrollable force tabs example">
+        <Tab
+          label="Accueil"
+          component={Link}
+          to="/"
+          icon={<HomeIcon />}
+          {...a11yProps(0)}
+          className={classes.icon}
+        />
+        <Tab
+          label="Recherche"
+          component={Link}
+          to="/search"
+          icon={<SearchIcon />}
+          {...a11yProps(1)}
+          className={classes.icon}
+        />
+        <Tab
+          label="Filmotheque"
+          component={Link}
+          to="/library"
+          icon={<LibraryBooksIcon />}
+          {...a11yProps(2)}
+          className={classes.icon}
+        />
+        <Tab
+          label="Utilisateur"
+          component={Link}
+          to="/my-profile"
+          icon={<FaceIcon />}
+          {...a11yProps(3)}
+          className={classes.icon}
+        />
       </Tabs>
     </div>
   );
-}
+};
 
 export default NavBar;

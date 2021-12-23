@@ -97,6 +97,7 @@ const SignIn = ({ setIsLogged, isLogged }) => {
 
     // on récupére les donnée du formulaire de login
     const { email, password } = e.target.elements;
+    console.log("e.target.elements",e.target.elements);
 
     // initialisation des etats à null
     setSalutation();
@@ -107,6 +108,7 @@ const SignIn = ({ setIsLogged, isLogged }) => {
         email: email.value,
         password: password.value,
       };
+     // console.log("dataaaaaaaaaa", data);
 
       const response = await axios.post(
         "https://projet-azap-heroku.herokuapp.com/v1/login",

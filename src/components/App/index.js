@@ -16,7 +16,7 @@ import MovieDetail from "../MovieDetail";
 import Error from "../Error";
 import Search from "../Search";
 import UserLibrary from "../UserLibrary";
-import ResetPassword from "../RestPassword";
+import ResetPassword from "../ResetPassword";
 import Team from "../Team";
 import GeneralConditions from "../GeneralConditions";
 

@@ -9,7 +9,7 @@ import {
   Button,
 }from '@material-ui/core';
 // == Import image
-import Logo from '../../images/logo_azap.png';
+import Logo from '../Header/logo_azap.png';
 /** variable useStyles store function makeStyles
  * function makeStyles () store component's classes uses for styling
  */

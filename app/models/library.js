@@ -8,9 +8,9 @@ class NoLibraryError extends Error {
 
 /**
  * @typedef Library
- * @property {number} id
- * @property {string} name
- * @property {number} user_id
+ * @property {number} id The library id 
+ * @property {string} name The library name
+ * @property {number} user_id The user id associated to the library
  */
 
 class Library {
@@ -47,7 +47,7 @@ class Library {
      * Retrieves a library from database
      * @static
      * @async
-     * @param {number} id
+     * @param {number} id The library id 
      * @returns {Library} the instance identified with its id
      * @throws {Error} an error object
      */
@@ -75,7 +75,7 @@ class Library {
      * Retrieves libraries from database with user id
      * @static
      * @async
-     * @param {number} id
+     * @param {number} id The user id 
      * @returns {Library} the instance identified with its user
      * @throws {Error} an error object
      */
@@ -98,8 +98,7 @@ class Library {
     /**
      * Adds an instance of Library in database
      * @async
-     * @param {number} user_id
-     * @returns {Library} the inserted instance
+     * @returns {Library} The newly inserted library
      * @throws {Error} An Error object
      */
     async create() {
@@ -163,8 +162,9 @@ class Library {
     }
 
     /**
-     * Delete all instances of Library in database
+     * Delete all instances of Library in database for a user
      * @async
+     * @param {number} user_id The user id 
      * @throws {Error} An Error object
      */
     static async deleteAllLibrary(user_id) {
@@ -173,12 +173,33 @@ class Library {
                 text: 'DELETE FROM "library" WHERE user_id = $1',
                 values: [user_id],
             };
-            console.log("🚀 ~ preparedQuery", preparedQuery)
+            console.log("🚀 ~ preparedQuery", preparedQuery);
 
             // supprime les libraries de la bdd grâce à son id
             await db.query(preparedQuery);
-            
-            
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail);
+            } else {
+                throw error;
+            }
+        }
+    }
+
+    /**
+     * Display all libraries (including movies) for a user
+     * @static
+     * @async
+     * @param {number} user_id The user id 
+     * @returns {Library} all libraries and all movies of each library of a user
+     * @throws {Error} an error object
+     */
+    static async findLibAndMovies(user_id) {
+        try {
+
+            const { rows } = await db.query("SELECT * from find_lib_and_movies($1)", [user_id]);
+
+            return rows;
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail);

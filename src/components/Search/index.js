@@ -23,24 +23,18 @@ const Search = () => {
   /** fetch vers l'Api pour recuperer les resultat de la recherche*/
   const fetchResult = async () => {
     try {
-      // en premier je vide la mémoire de l'ancienne recherche
       localStorage.removeItem("lastSearchedMovies");
 
-      // envoie de la requete vers API AZAP
       const response = await axios.get(
         `https://projet-azap-heroku.herokuapp.com/v1/search/${searchText}`
       );
 
-      // si success requete retourne un tableau de movies
       const movies = response.data;
 
-      // on passe le tableau de movies dans le state pour affichage dans le composant displaySearch
       setResultat(movies);
 
-      //on stocke le tableau des movies dans le localStorage afin de garder en mémoire le résulat
       localStorage.setItem("lastSearchedMovies", JSON.stringify(movies));
 
-      // permet de vider la derniere recherche enregistrée au bout de 5 minutes
       setTimeout(function () {
         localStorage.removeItem("lastSearchedMovies");
       }, 5 * 60 * 1000);
@@ -51,7 +45,7 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-    // Je veux lancer une requête sur l'API Github
+    // Je veux lancer une requête 
     fetchResult();
   };
 

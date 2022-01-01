@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 /**
  *permet à l'utilisateur de s'enregistrer on ajoutant(nom, email et mot de passe)
  */
-const SignUp = (props) => {
+const SignUp = () => {
   const history = useHistory();
   const classes = useStyles();
   const [checked, setChecked] = useState();
@@ -82,19 +82,23 @@ const SignUp = (props) => {
     e.preventDefault();
 
     if(regex.test(validedPassword)){
-    const { email, username, password } = e.target.elements;
+    const { email, username, password,  } = e.target.elements;
     
+   // ici on va juste checker si c'est TRUE vu que la valeur par default d'adult
+   // dans la BDD est False
+     let test ;
+    if (checked) {
+     // details.adult = true;
+     test=true;
+    } 
     let details = {
       email: email.value,
       username: username.value,
       password: password.value,
+      adult: test
+     
     };
-
-    if (checked) {
-      details.adult = true;
-    } else {
-      details.adult = false;
-    }
+    //console.log("sanaaa",   details);
 
     try {
       const response = await axios.post(

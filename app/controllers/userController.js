@@ -4,8 +4,10 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
 const userController = {
+
     login: async (req, res) => {
 
+        let message = "";
         const SECRET_KEY = process.env.SECRET_KEY;
 
         try {

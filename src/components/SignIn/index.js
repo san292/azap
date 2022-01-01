@@ -97,7 +97,7 @@ const SignIn = ({ setIsLogged, isLogged }) => {
 
     // on récupére les donnée du formulaire de login
     const { email, password } = e.target.elements;
-    console.log("e.target.elements",e.target.elements);
+    //console.log("e.target.elements",e.target.elements);
 
     // initialisation des etats à null
     setSalutation();

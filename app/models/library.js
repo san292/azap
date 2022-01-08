@@ -18,6 +18,8 @@ class Library {
     static NoLibraryError = NoLibraryError;
 
     constructor(data = {}) {
+        // on fait une boucle sur les proprietes comme ça si on declare une nouvelle colonne 
+        //dans la bdd elle sera incluse, pas besoin de la rajouter dans le modele
         for (const prop in data) {
             this[prop] = data[prop];
         }
@@ -32,6 +34,8 @@ class Library {
      */
     static async findAll() {
         try {
+         //on destructure l'objet de la reponse recu et on envoi le tableau au front
+        
             const { rows } = await db.query('SELECT * FROM "library"');
             return rows.map((row) => new Library(row));
         } catch (error) {

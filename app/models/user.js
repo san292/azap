@@ -36,7 +36,7 @@ class User {
     static async findAll() {
         try {
             const { rows } = await db.query('SELECT * FROM "user"');
-            return rows.map((row) => new User(row));
+            return rows.map((row) => new User(row));      
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail);

@@ -1,8 +1,9 @@
 # project-azap
+Azap est une application qui a été crée dans le but de valider mon projet de fin d'études, durant ce projet on a esayé de mettre en pratique toutes les connaissances acquises durant la formation, tant en front qu'en back, 
 
 # readme front
 
-Have you ever spent an entire hour looking for a movie to watch tonight in front of your HAVSTA Ikea media library or on platforms? Have you ever bought the same movie twice while it sits quietly above your TV cabinet? We got you! AZAP is intended as a film management application, in which the user can create their own lists, classified, sorted and follow the content they wish to see and / or buy. This application makes it easy to navigate on an interface designed primarily for mobile phones. The application is intended for all audiences and especially for moviegoers who want to be able to efficiently manage the films they own or would like to see and have.
+Avez-vous déjà passé une heure entière à chercher un film à voir ce soir sur les plateformes ? Avez-vous déjà acheté deux fois le même film alors que vous le possedez deja, AZAP se veut une application de gestion de films, dans laquelle l'utilisateur peut créer ses propres listes, classer, trier et suivre les contenus qu'il souhaite voir et/ou acheter. Cette application permet de naviguer facilement sur une interface conçue principalement pour les téléphones mobiles. L'application s'adresse à tous les publics et plus particulièrement aux cinéphiles qui souhaitent pouvoir gérer efficacement les films qu'ils possèdent ou qu'ils aimeraient voir et avoir.
 
 # Getting Started with Create React App
 
